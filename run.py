@@ -22,6 +22,10 @@ async def get_help(message: Message):
 async def how_are_you(message: Message):
     await message.answer('ok!')
 
+@dp.message(F.photo)
+async def get_photo(message: Message):
+    await message.answer(f'ID photo: {message.photo[-1].file_id}')
+
 @dp.message(Command('id'))
 async def user_id(message: types.Message):
     await message.answer(f"your id: {message.from_user.id}")
