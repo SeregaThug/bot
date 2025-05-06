@@ -2,6 +2,8 @@ from aiogram import F,Router,types
 from aiogram.filters import CommandStart,Command
 from aiogram.types import Message
 
+import app.keybords as kb
+
 
 router = Router()
 
@@ -10,7 +12,7 @@ router = Router()
 
 @router.message(CommandStart())
 async def cmd_start(message: Message):
-    await message.answer("1")
+    await message.reply(f'hello',reply_markup=kb.settings)
 
 @router.message(Command('help'))
 async def get_help(message: Message):
