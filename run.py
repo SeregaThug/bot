@@ -1,7 +1,7 @@
 import asyncio
 import logging
 
-from aiogram import Bot, Dispatcher,F
+from aiogram import Bot, Dispatcher,F,types
 from aiogram.filters import CommandStart,Command
 from aiogram.types import Message
 
@@ -21,6 +21,10 @@ async def get_help(message: Message):
 @dp.message(F.text == 'How are u)')
 async def how_are_you(message: Message):
     await message.answer('ok!')
+
+@dp.message(Command('id'))
+async def user_id(message: types.Message):
+    await message.answer(f"your id: {message.from_user.id}")
 
 async def main():
     await dp.start_polling(bot)
