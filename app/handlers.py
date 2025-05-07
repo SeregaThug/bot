@@ -1,6 +1,6 @@
 from aiogram import F,Router,types
 from aiogram.filters import CommandStart,Command
-from aiogram.types import Message
+from aiogram.types import Message,CallbackQuery
 
 import app.keybords as kb
 
@@ -12,7 +12,7 @@ router = Router()
 
 @router.message(CommandStart())
 async def cmd_start(message: Message):
-    await message.reply(f'hello',reply_markup=kb.settings)
+    await message.reply(f'hello',reply_markup=kb.main)
 
 @router.message(Command('help'))
 async def get_help(message: Message):
@@ -34,3 +34,9 @@ async def give_photo(message: Message):
 @router.message(Command('id'))
 async def user_id(message: types.Message):
     await message.answer(f"your id: {message.from_user.id}")
+
+@router.callback_query(F.data == 'catalog')
+async def catalog(callback: CallbackQuery):
+    
+    await callback.answer('you chose') #callback to callback
+    await callback.message.edit_text('Hello',reply_markup=kb.settings)

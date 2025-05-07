@@ -1,17 +1,11 @@
 from aiogram.types import (ReplyKeyboardMarkup,KeyboardButton,
                            InlineKeyboardMarkup,InlineKeyboardButton)
 
-main = ReplyKeyboardMarkup(keyboard=[
-    [KeyboardButton(text='Catalog')],
-
-    [KeyboardButton(text='Shop List'),
-     KeyboardButton(text='Contacts')]
-
-],                      
-
-                        resize_keybord=True,
-                        input_field_placeholder='chose'
-),
+main = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text='catalog',callback_data='catalog')],
+    [InlineKeyboardButton(text='shop list',callback_data='shoplist')],
+    [InlineKeyboardButton(text='contacts',callback_data='contacts')]
+])
 
 settings = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text='VK',url='https://vk.com')]
