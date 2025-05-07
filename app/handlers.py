@@ -1,12 +1,17 @@
 from aiogram import F,Router,types
 from aiogram.filters import CommandStart,Command
 from aiogram.types import Message,CallbackQuery
+from aiogram.fsm.state import StatesGroup,State
+from aiogram.fsm.context import FSMContext
 
 import app.keybords as kb
 
 
 router = Router()
 
+class Reg(StatesGroup):
+    name = State()
+    number = State()
 
 
 
@@ -40,3 +45,21 @@ async def catalog(callback: CallbackQuery):
     
     await callback.answer('you chose') #callback to callback
     await callback.message.edit_text('Hello',reply_markup=kb.settings)
+
+@router.message(Command('reg'))
+async def reg_one(message: Message, state: FSMContext):
+    await state.set_state(Reg.name)
+    await message.answer('Your name:')
+
+@router.message(Reg.name)
+async def reg_two(message: Message, state: FSMContext):
+    await state.update_data(name = message.text)
+    await state.set_state(Reg.number)
+    await message.answer('phone number')
+
+@router.message(Reg.number)
+async def two_three(message: Message,state: FSMContext):
+    await state.update_data(number = message.text)
+    data = await state.get_data()
+    await message.answer(f'cool.\n Your name: {data["name"]} \n Number: {data["number"]}')
+    await state.clear()
